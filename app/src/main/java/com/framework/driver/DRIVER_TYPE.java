@@ -1,0 +1,11 @@
+package com.framework.driver;
+
+public enum DRIVER_TYPE {
+  WEB_CHROME_DRIVER,
+  WEB_EDGE_DRIVER,
+  WEB_SAFARI_DRIVER,
+  WEB_FIREFOX_DRIVER,
+
+  MOBILE_DRIVER_ANDROID,
+  MOBILE_DRIVER_IOS,   
+}
