@@ -7,6 +7,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchFrameException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,6 +22,7 @@ import com.github.dockerjava.api.model.Config;
 import com.google.gson.internal.JavaVersion;
 
 import io.appium.java_client.functions.ExpectedCondition;
+import lombok.val;
 
 public class Action extends CommonAction {
   private final WebDriver driver;
@@ -105,7 +107,7 @@ public class Action extends CommonAction {
     }
   }
 
-    public Boolean isElement(By locator, int waitSeconds) {
+  public Boolean isElement(By locator, int waitSeconds) {
     try {
       WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(waitSeconds));
       wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
@@ -204,7 +206,7 @@ public class Action extends CommonAction {
       }
     }
   }
-  
+
   public void waitClick(WebElement element, int waitSeconds) {
     if (isClickableElement(element, waitSeconds)) {
       focusOn(element);
@@ -215,13 +217,14 @@ public class Action extends CommonAction {
         js.click(element);
         logger.atInfo().log("JS click element, Element Info : {}", element);
       } else {
-        logger.atError().log("Unable to click element, Element Info : {}", element);
+        logger.atError().log("Unable to click element, Element Info : {} for more than {} seconds", element,
+            waitSeconds);
         throw new NoSuchElementException("Element 탐색 불가");
       }
     }
   }
 
-  public void click(By locator, int waitSeconds) {
+  public void waitClick(By locator, int waitSeconds) {
     if (isClickableElement(locator, waitSeconds)) {
       focusOn(driver.findElement(locator));
       driver.findElement(locator).click();
@@ -231,7 +234,8 @@ public class Action extends CommonAction {
         js.click(locator);
         logger.atInfo().log("JS click element, Locator Info : {}", locator);
       } else {
-        logger.atError().log("Unable to click element, Locator Info : {}", locator);
+        logger.atError().log("Unable to click element, Locator Info : {} for more then {} seconds", locator,
+            waitSeconds);
         throw new NoSuchElementException("Element 탐색 불가");
       }
     }
@@ -262,9 +266,14 @@ public class Action extends CommonAction {
     driver.findElement(locator).sendKeys(keyToSends);
     logger.atInfo().log("Type [{}] in element, Locator Info : {}", keyToSends, locator);
   }
-  
-  public String getText(WebElement element) { return isElement(element) ? element.getText() : null; }
-  public String getText(By locator) { return isElement(locator) ? driver.findElement(locator).getText() : null;}
+
+  public String getText(WebElement element) {
+    return isElement(element) ? element.getText() : null;
+  }
+
+  public String getText(By locator) {
+    return isElement(locator) ? driver.findElement(locator).getText() : null;
+  }
 
   public void focusOn(WebElement element) {
     try {
@@ -295,6 +304,10 @@ public class Action extends CommonAction {
       return je.executeScript(script);
     }
 
+    public Object execute(String script, Object... args) {
+      return je.executeScript(script, args);
+    }
+
     public void setHighlight(WebElement element) {
       je.executeScript("arguments[0].style.border = 'solid 4px red", element);
 
@@ -317,6 +330,117 @@ public class Action extends CommonAction {
     public void click(By locator) {
       je.executeScript("arguments[0].click()", driver.findElement(locator));
     }
+
+    public void makeAlert(String text) {
+      je.executeScript("alert('" + text + "')");
+    }
+
+    public void makeConfirm(String text) {
+      je.executeScript("confirm('" + text + "')");
+    }
+
+    public String getCurrentDomatin() {
+      return je.executeScript("return document.domain") + "";
+    }
+
+    public String getCurrentUrl() {
+      return je.executeScript("return document.URL") + "";
+    }
+
+    public String getTitle() {
+      return je.executeScript("return document.title") + "";
+    }
+
+    public void goTo(String url) {
+      if (!url.startsWith("http")) {
+        url = "https://" + url;
+      }
+      je.executeScript("window.location = '" + url + "'");
+      logger.atInfo().log("go to {}", url);
+    }
+
+    public void get(String url) {
+      goTo(url);
+    }
+
+    public void scroll(int x, int y) {
+      je.executeScript("window.scrollTo(" + x + ", " + y + ")");
+    }
+
+    public void scrollToTop() {
+      je.executeScript("window.scrollTo(0,0)");
+    }
+
+    public void scrollToBottom() {
+      je.executeScript("window.scrollTo(0,document.body.scrollHeight)");
+    }
+
+    public int getInnerHeight() {
+      return Integer.parseInt(je.executeScript("return window.innerHeight") + "");
+    }
+
+    public void refresh() {
+      je.executeScript("location.reload()");
+    }
+
+    public void setValue(WebElement element, String value) {
+      je.executeScript("arguments[0].value = " + value + "", element);
+    }
+
+    public void newWindows(String url) {
+      je.executeScript("window.open(" + url + ")");
+    }
+
+    public void newTab() {
+      je.executeScript("window.open('about:black', '_black');");
+    }
+
+    public void removeSession(String key) {
+      je.executeScript("window.sessionStorage.removeItem(" + key + ")");
+    }
+
+    public Boolean isSession(String key) {
+      return !(je.executeScript("return window.sessionStorage.getItem(" + key + ")") == null);
+    }
+
+    public String getSession(String key) {
+      return (String) je.executeScript("return window.sessionStorage.getItem(" + key + ")");
+    }
+
+    public void setSession(String key, Object value) {
+      je.executeScript(String.format("window.sessionStorage.setItem('%s', '%s');", key, value));
+    }
+
+    public void clearAllSession() {
+      je.executeScript("window.sessionStorage.clear()");
+      logger.atInfo().log("Clear all Sessions");
+    }
+
+    public WebElement getParent(WebElement element) {
+      try {
+        return (WebElement) je.executeScript("return arguments[0].parentNode", element);
+      } catch (ClassCastException e) {
+        // TODO: handle exception
+        logger.atWarn().log("Cannot find element {}'s parent", element);
+        return null;
+      }
+    }
+
+    public int getPositionX() {
+      String positionX = je.executeScript("return window.scrollX") + "";
+      if (positionX.contains(".")) {
+        positionX = positionX.split("\\.")[0];
+      }
+      return Integer.parseInt(positionX);
+    }
+
+    public int getPositionY() {
+      String positionY = je.executeScript("return window.scrollY") + "";
+      if (positionY.contains(".")) {
+        positionY = positionY.split("\\.")[0];
+      }
+      return Integer.parseInt(positionY);
+    }
   }
 
   public class Alert {
@@ -336,13 +460,42 @@ public class Action extends CommonAction {
         return false;
       }
     }
+
+    public void accept() {
+      if (!isAlert()) {
+        logger.atError().log("Alert does found");
+        throw new NoAlertPresentException("Cannot find alert");
+      }
+
+      driver.switchTo().alert().accept();
+      logger.atDebug().log("Click the accept button on the alert");
+    }
+
+    public String getText() {
+      if (!isAlert()) {
+        logger.atError().log("Alert does found");
+        throw new NoAlertPresentException("Cannot find alert");
+      }
+
+      return driver.switchTo().alert().getText();
+    }
+
+    public String type(String keyToSends) {
+      if (!isAlert()) {
+        logger.atError().log("Alert does found");
+        throw new NoAlertPresentException("Cannot find alert");
+      }
+
+      driver.switchTo().alert().sendKeys(keyToSends);
+      return this;
+    }
   }
 
   public class Confirm extends Alert {
     public Confirm(WebDriver driver) {
       super(driver);
     }
-    
+
     public void dismiss() {
       if (!isAlert()) {
         logger.atError().log("Confirm does not found");
@@ -371,6 +524,42 @@ public class Action extends CommonAction {
         throw new NoSuchElementException("Cannot find iFrame Element");
       }
     }
+
+    public void switchToFrameByName(String name) {
+      if (isElement(By.xpath("//iframe[@name='" + name + "'']"))) {
+        driver.switchTo().frame(name);
+        logger.atInfo().log("Swtich to frame of [{}]", name);
+      } else {
+        logger.atError().log("Cannot switch to frame of [{}]", name);
+        throw new NoSuchElementException("Cannot find iFrame Element");
+      }
+    }
+
+    public void switchTo(int frameIndex) {
+      driver.switchTo().frame(frameIndex);
+    }
+
+    public void switchTo(WebElement element) {
+      if (isElement(element)) {
+        driver.switchTo().frame(element);
+        logger.atInfo().log("Switch to frame of [{}]", element);
+      } else {
+        logger.atError().log("Cannot switch to frame of [{}]", element);
+        throw new NoSuchFrameException("Cannot find iFrame Element");
+      }
+    }
+
+    public <T> T defaultContent(T page) {
+      driver.switchTo().defaultContent();
+      logger.atInfo().log("Switch to [{}] page", page);
+      return page;
+    }
+
+    public void defaultContent() {
+      driver.switchTo().defaultContent();
+      logger.atInfo().log("Switch to default content");
+    }
+
   }
 
   private Boolean checkHeadless() {

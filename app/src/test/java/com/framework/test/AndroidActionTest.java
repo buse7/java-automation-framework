@@ -29,8 +29,12 @@ public class AndroidActionTest {
 
   @BeforeClass
   public void setUpAll() throws Exception {
-    UiAutomator2Options options = new UiAutomator2Options().setUdid(Terminal.adb.getTarget()).setNoReset(false)
-        .setNewCommandTimeout(Duration.ZERO).setAppPackage("net.bucketplace").setPlatformName("Android")
+    UiAutomator2Options options = new UiAutomator2Options()
+        .setUdid(Terminal.adb.getTarget())
+        .setNoReset(false)
+        .setNewCommandTimeout(Duration.ZERO)
+        .setAppPackage("net.bucketplace")
+        .setPlatformName("Android")
         .setPlatformVersion(Terminal.adb.getDeviceAndroidVersion())
         .setApp("/Users/jimmykim/00.Dev/01.Git/java-automation-framework/오늘의집 - 라이프스타일 슈퍼앱_23.17.0_Apkpure.apk");
 
