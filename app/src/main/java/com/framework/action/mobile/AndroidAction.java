@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.framework.action.Action;
 import com.framework.action.Terminal;
+import static com.framework.action.Terminal.adb;
 import com.framework.driver.Driver;
 import com.framework.driver.MobileDriver;
 
@@ -79,7 +80,7 @@ public class AndroidAction extends Action {
   }
 
   public Boolean isDisplayed(WebElement element) {
-    return isElement(element) && Boolean.parseBoolean(element.getAttribute("disaplyed"));
+    return isElement(element) && Boolean.parseBoolean(element.getAttribute("displayed"));
   }
 
   public String getBound(WebElement element) {

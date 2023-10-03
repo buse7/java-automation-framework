@@ -2,15 +2,25 @@
 	"version": "2.0.0",
 	"tasks": [
     {
-      "type": "java (build)",
-      "paths": [
-        "${workspace}"
+      "type": "gradle",
+      "id": "/Users/jimmykim/00.Dev/01.Git/java-automation-frameworkcleanTestjava-automation-framework",
+      "script": "cleanTest",
+      "description": "",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "project": "java-automation-framework",
+      "buildFile": "/Users/jimmykim/00.Dev/01.Git/java-automation-framework/build.gradle",
+      "rootProject": "java-automation-framework",
+      "projectFolder": "/Users/jimmykim/00.Dev/01.Git/java-automation-framework",
+      "workspaceFolder": "/Users/jimmykim/00.Dev/01.Git/java-automation-framework",
+      "args": "",
+      "javaDebug": false,
+      "problemMatcher": [
+        "$gradle"
       ],
-      "isFullBuild": true,
-      "group": "build",
-      "problemMatcher": [],
-      "label": "java (build): Build Workspace",
-      "detail": "$(tools) Build all the Java projects in workspace.",
+      "label": "gradle: cleanTest"
     }
   ]
 }

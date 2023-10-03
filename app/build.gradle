@@ -50,6 +50,7 @@ dependencies {
 test {
   useTestNG() {
     dependsOn cleanTest
+    useDefaultListeners = false
 
     systemProperties(System.getProperties())
   }
@@ -68,7 +69,9 @@ task executeAllure {
   doLast { 
     exec {
       workingDir '.'
-      commandLine 'allure', 'serve', '-h', 'localhost', './allure-results'
+      commandLine 'allure', 'serve', '-h', 'localhost', './build/allure-results'
     }
   }
 }
+
+tasks.withType(Copy).all { duplicatesStrategy 'exclude' }

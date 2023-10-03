@@ -480,14 +480,13 @@ public class Action extends CommonAction {
       return driver.switchTo().alert().getText();
     }
 
-    public String type(String keyToSends) {
+    public void type(String keyToSends) {
       if (!isAlert()) {
         logger.atError().log("Alert does found");
         throw new NoAlertPresentException("Cannot find alert");
       }
 
       driver.switchTo().alert().sendKeys(keyToSends);
-      return this;
     }
   }
 

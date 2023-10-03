@@ -15,7 +15,7 @@ import com.framework.exception.SMSHelperException;
 import static com.framework.action.Terminal.adb;
 
 public class SMSHelper {
-  private final String packageName = 'com.smshelper';
+  private final String packageName = "com.smshelper";
   private final File file = new File();
 
   public SMSHelper() {
