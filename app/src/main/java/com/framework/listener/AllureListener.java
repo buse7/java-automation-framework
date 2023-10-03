@@ -25,7 +25,7 @@ import io.qameta.allure.model.TestResult;
 import ws.schild.jave.Encoder;
 import ws.schild.jave.EncoderException;
 import ws.schild.jave.MultimediaObject;
-import ws.schild.jave.encode.AudioAttributes;;
+import ws.schild.jave.encode.AudioAttributes;
 import ws.schild.jave.encode.EncodingAttributes;
 import ws.schild.jave.encode.VideoAttributes;
 import atu.testrecorder.ATUTestRecorder;
@@ -203,7 +203,7 @@ public class AllureListener implements TestLifecycleListener {
   
   public void attachTestLog(String logFile) {
     try {
-      File file = new File(System.getProperty("user.dir") + "/logs" + yearFormat.format(date) + "/"
+      File file = new File(System.getProperty("user.dir") + "/logs/" + yearFormat.format(date) + "/"
           + dateFormat.format(date) + "/" + logFile);
       if (file.exists()) {
         String content = Files.readString(Paths.get(System.getProperty("user.dir") + "/logs/" + yearFormat.format(date)
