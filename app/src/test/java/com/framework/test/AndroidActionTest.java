@@ -36,7 +36,7 @@ public class AndroidActionTest {
         .setAppPackage("net.bucketplace")
         .setPlatformName("Android")
         .setPlatformVersion(Terminal.adb.getDeviceAndroidVersion())
-        .setApp("/Users/jimmykim/00.Dev/01.Git/java-automation-framework/오늘의집 - 라이프스타일 슈퍼앱_23.17.0_Apkpure.apk");
+        .setApp(PropertyHandler.getProperties("apppath"));
 
     try {
       this.driver = new Builder(DRIVER_TYPE.MOBILE_DRIVER_ANDROID, options)

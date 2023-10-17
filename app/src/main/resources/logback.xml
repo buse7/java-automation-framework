@@ -4,21 +4,7 @@
     <timestamp key="date" datePattern="MM-dd"/>
     <timestamp key="time" datePattern="HH-mm-ss"/>
     <property name="LOG_DIR" value="./logs" />
-    <!-- <property name="FILE_NAME" value="%X{tid}_${date}_${time}" /> -->
-    
-    <!-- <appender name="SIFT" class="ch.qos.logback.classic.sift.SiftingAppender">
-    <discriminator>
-      <key>tid</key>
-      <defaultValue>unknown</defaultValue>
-    </discriminator>
-    <sift>
-
-    </sift>
-    </appender> -->
     <appender name="FILE" class="ch.qos.logback.classic.sift.SiftingAppender">
-    <!-- in the absence of the class attribute, it is assumed that the
-         desired discriminator type is
-         ch.qos.logback.classic.sift.MDCBasedDiscriminator -->
     <discriminator>
       <key>tid</key>
       <defaultValue>logback</defaultValue>
@@ -37,17 +23,6 @@
         <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
       </encoder>
     </appender>
-    <!-- <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-      <file>${LOG_DIR}/${year}/${month}/${FILE_NAME}.log</file>
-      <encoder>
-          <pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
-      </encoder>
-    </appender>
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-      <encoder>
-        <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-      </encoder>
-    </appender> -->
 
     <root level="info">
         <!-- <appender-ref ref="SIFT" /> -->
