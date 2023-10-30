@@ -1,9 +1,9 @@
 package com.framework.test;
 
-import org.testng.annotations.Test;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 import com.framework.driver.DRIVER_TYPE;
 import com.framework.driver.Driver;

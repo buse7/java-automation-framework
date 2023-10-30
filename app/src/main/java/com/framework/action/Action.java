@@ -175,6 +175,14 @@ public class Action extends CommonAction {
     }
   }
 
+  public List<WebElement> getChildren(WebElement element) {
+    return element.findElements(By.xpath(".//*"));
+  }
+
+  public List<WebElement> getChildren(By locator) {
+    return driver.findElement(locator).findElements(By.xpath(".//*"));
+  }
+
   public void click(WebElement element) {
     if (isClickableElement(element)) {
       focusOn(element);
@@ -309,7 +317,7 @@ public class Action extends CommonAction {
     }
 
     public void setHighlight(WebElement element) {
-      je.executeScript("arguments[0].style.border = 'solid 4px red", element);
+      je.executeScript("arguments[0].style.border = 'solid 4px red'", element);
 
       try {
         Thread.sleep(200L);

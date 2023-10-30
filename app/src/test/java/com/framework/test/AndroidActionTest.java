@@ -3,9 +3,7 @@ package com.framework.test;
 import java.time.Duration;
 
 import org.slf4j.Logger;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
