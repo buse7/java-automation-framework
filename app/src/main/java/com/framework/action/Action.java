@@ -1,9 +1,13 @@
 package com.framework.action;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
-import org.openqa.selenium.Alert;
+import javax.swing.text.html.HTMLDocument.Iterator;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoAlertPresentException;
@@ -18,11 +22,6 @@ import org.testng.Assert;
 
 import com.framework.driver.Driver;
 import com.framework.driver.WebCommonDriver;
-import com.github.dockerjava.api.model.Config;
-import com.google.gson.internal.JavaVersion;
-
-import io.appium.java_client.functions.ExpectedCondition;
-import lombok.val;
 
 public class Action extends CommonAction {
   private final WebDriver driver;
@@ -31,6 +30,7 @@ public class Action extends CommonAction {
 
   public Alert alert;
   public Confirm confirm;
+  public PopUp popup;
   public IFrame iFrame;
 
   public Boolean isHeadless;
@@ -46,6 +46,7 @@ public class Action extends CommonAction {
     js = new JavaScriptAction(this.driver);
     alert = new Alert(this.driver);
     confirm = new Confirm(this.driver);
+    popup = new PopUp(this.driver);
     iFrame = new IFrame(this.driver);
     isHeadless = checkHeadless();
   }
@@ -183,6 +184,14 @@ public class Action extends CommonAction {
     return driver.findElement(locator).findElements(By.xpath(".//*"));
   }
 
+  public List<WebElement> getFirstChildren(WebElement element) {
+    return element.findElements(By.xpath("./*"));
+  }
+
+  public List<WebElement> getFirstChildren(By locator) {
+    return driver.findElement(locator).findElements(By.xpath("./*"));
+  }
+
   public void click(WebElement element) {
     if (isClickableElement(element)) {
       focusOn(element);
@@ -273,6 +282,16 @@ public class Action extends CommonAction {
     }
     driver.findElement(locator).sendKeys(keyToSends);
     logger.atInfo().log("Type [{}] in element, Locator Info : {}", keyToSends, locator);
+  }
+
+  public void uploadFile(WebElement element, CharSequence... path) {
+    element.sendKeys(path);
+    logger.atInfo().log("UploadFile [{}] element, Path Info : {}", element, path);
+  }
+
+  public void uploadFile(By locator, CharSequence... path) {
+    driver.findElement(locator).sendKeys(path);
+    logger.atInfo().log("UploadFile [{}] element, Path Info : {}", locator, path);
   }
 
   public String getText(WebElement element) {
@@ -512,7 +531,24 @@ public class Action extends CommonAction {
       driver.switchTo().alert().dismiss();
       logger.atDebug().log("Click the dismiss button on the confirm");
     }
+  }
 
+  public class PopUp {
+    private final WebDriver driver;
+
+    public PopUp(WebDriver driver) {
+      this.driver = driver;
+    }
+
+    public void switchToPopUp() {
+      String main = driver.getWindowHandle();
+      List<String> windows = new ArrayList<String>(driver.getWindowHandles());
+      for(String window : windows){
+        if(!(window.equals(main))){
+          driver.switchTo().window(window);
+        }
+      }
+    }
   }
 
   public class IFrame {

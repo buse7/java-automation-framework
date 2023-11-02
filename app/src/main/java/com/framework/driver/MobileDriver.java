@@ -41,7 +41,7 @@ public class MobileDriver extends Driver {
     super(builder);
 
     if (System.getProperty("appium_server") == null || System.getProperty("appium_server") == "") {
-      AppiumDriverLocalService service = AppiumDriverLocalService.buildService(
+      service = AppiumDriverLocalService.buildService(
         new AppiumServiceBuilder()
         .usingPort(4723)
         .withArgument(GeneralServerFlag.BASEPATH, "wd/hub")
@@ -82,6 +82,7 @@ public class MobileDriver extends Driver {
 
   public void quit() {
     if (this.driverType == DRIVER_TYPE.MOBILE_DRIVER_ANDROID) {
+      logger.info("드라이버 종료함");
       this.androidDriver.quit();
     } else {
       this.iosDriver.quit();
@@ -89,6 +90,7 @@ public class MobileDriver extends Driver {
     
 
     if (this.service != null) {
+      logger.info("서비스 종료함");
       this.service.stop();
     }
   }
