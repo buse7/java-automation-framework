@@ -83,16 +83,16 @@ public class MobileDriver extends Driver {
   public void quit() {
     if (this.driverType == DRIVER_TYPE.MOBILE_DRIVER_ANDROID) {
       this.androidDriver.quit();
-      logger.info("android driver quit...")
+      logger.info("android driver quit...");
     } else {
       this.iosDriver.quit();
-      logger.info("ios driver quit...")
+      logger.info("ios driver quit...");
     }
     
 
     if (this.service != null) {
       this.service.stop();
-      logger.info("appium service stoped....")
+      logger.info("appium service stoped....");
     }
   }
 }
