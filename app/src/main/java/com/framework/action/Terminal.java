@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 
 import com.framework.exception.AdbException;
-import com.framework.action.Permission;
 import com.framework.listener.Log;
 
 public class Terminal {

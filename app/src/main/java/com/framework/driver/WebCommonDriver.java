@@ -50,7 +50,7 @@ public class WebCommonDriver extends Driver {
       options.addArguments("--window-position=0,0");
     }
 
-    if (headless || (System.getLogger("headless") != null && Boolean.parseBoolean(System.getProperty("headless")))) {
+    if (headless || (System.getProperty("headless") != null && Boolean.parseBoolean(System.getProperty("headless")))) {
       options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1080", "--ignore-certificate-errors",
           "--no-sandbox", "--disable-dev-shm-usage");
       options.addArguments("--lang=ko",

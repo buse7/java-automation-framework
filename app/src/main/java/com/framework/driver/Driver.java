@@ -119,5 +119,9 @@ public abstract class Driver {
   public DRIVER_TYPE getDriverType() {
     return driverType;
   }
+
+  public boolean getHeadless() {
+    return headless;
+  }
   
 }
