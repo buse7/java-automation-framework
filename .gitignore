@@ -3,10 +3,11 @@
 
 
 # Ignore Gradle build output directory
-app/build/
-app/video/*
-app/logs/*
+bin/
+build/
+build/allure-results/*
+video/*
+logs/*
 
 application.properties
 
-allure-results/*

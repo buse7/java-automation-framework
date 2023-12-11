@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <timestamp key="year" datePattern="yyyy"/>
+    <timestamp key="date" datePattern="MM-dd"/>
+    <timestamp key="time" datePattern="HH-mm-ss"/>
+    <property name="LOG_DIR" value="./logs" />
+    <appender name="FILE" class="ch.qos.logback.classic.sift.SiftingAppender">
+    <discriminator>
+      <key>tid</key>
+      <defaultValue>logback</defaultValue>
+    </discriminator>
+    <sift>
+      <appender name="FILE-${tid}" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_DIR}/${year}/${date}/${tid}_${date}.log</file>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+          <pattern>%d [%thread] %level %mdc %logger{35} - %msg%n</pattern>
+        </layout>
+      </appender>
+    </sift>
+  </appender>
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+      <encoder>
+        <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+      </encoder>
+    </appender>
+
+    <root level="info">
+        <!-- <appender-ref ref="SIFT" /> -->
+        <appender-ref ref="FILE" />
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
