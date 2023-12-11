@@ -3,8 +3,8 @@
 
 
 # Ignore Gradle build output directory
-bin/*
-build/*
+bin/
+build/
 build/allure-results/*
 video/*
 logs/*

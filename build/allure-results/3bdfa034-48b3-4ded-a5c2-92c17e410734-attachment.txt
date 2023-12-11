@@ -1,2 +1,0 @@
-2023-12-11 16:48:28,007 [Test worker] INFO tid=tc1 c.framework.listener.AllureListener - tc1 test is starting.
-2023-12-11 16:48:29,626 [Test worker] INFO tid=tc1 c.framework.listener.AllureListener - tc1 test is succeed.

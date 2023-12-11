@@ -1,8 +1,0 @@
-2023-12-10 12:16:01,243 [Test worker] ERROR  com.framework.listener.Log - Command line error, Command : adb
-2023-12-10 12:16:08,255 [Test worker] INFO  i.g.bonigarcia.wdm.WebDriverManager - Using chromedriver 120.0.6099.71 (resolved driver for Chrome 120)
-2023-12-10 12:16:08,272 [Test worker] INFO  i.g.bonigarcia.wdm.WebDriverManager - Reading https://chromedriver.storage.googleapis.com/ to seek chromedriver
-2023-12-10 12:16:08,935 [Test worker] INFO  i.g.b.wdm.online.Downloader - Downloading https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/120.0.6099.71/mac-arm64/chromedriver-mac-arm64.zip
-2023-12-10 12:16:09,573 [Test worker] INFO  i.g.b.wdm.online.Downloader - Extracting driver from compressed file chromedriver-mac-arm64.zip
-2023-12-10 12:16:09,670 [Test worker] INFO  i.g.bonigarcia.wdm.WebDriverManager - Exporting webdriver.chrome.driver as /Users/jimmykim/.cache/selenium/chromedriver/mac-arm64/120.0.6099.71/chromedriver
-2023-12-10 12:19:59,810 [Test worker] INFO  i.g.bonigarcia.wdm.WebDriverManager - Using chromedriver 120.0.6099.71 (resolved driver for Chrome 120)
-2023-12-10 12:19:59,824 [Test worker] INFO  i.g.bonigarcia.wdm.WebDriverManager - Exporting webdriver.chrome.driver as /Users/jimmykim/.cache/selenium/chromedriver/mac-arm64/120.0.6099.71/chromedriver
