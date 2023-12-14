@@ -20,8 +20,8 @@ public class PlayWrightTest {
     public void setUpAll() {
         this.driver = new PlayWrightDriver.Builder(DRIVER_TYPE.WEB_CHROME_DRIVER)
                 .driverName("driver")
+                .isRecordVideo(true)
                 .maxWindowSize(true)
-                .headless(false)
                 .build();
     }
 
@@ -30,6 +30,7 @@ public class PlayWrightTest {
         try (Page page = this.driver.getBrowser().newPage()) {
             page.navigate("https://www.naver.com");
         }
+        Assert.fail();
         System.out.println(this.driver.getDriverType());
     }
 

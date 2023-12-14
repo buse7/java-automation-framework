@@ -26,9 +26,9 @@ public class AndroidAction extends Action {
 
     this.driver = this.getDriver();
 
-    int defaultWaitSeonds = 10;
+    int defaultWaitSeconds = 10;
 
-    wait = new WebDriverWait(this.driver, Duration.ofSeconds(defaultWaitSeonds));
+    wait = new WebDriverWait(this.driver, Duration.ofSeconds(defaultWaitSeconds));
     actions = new Actions(this.driver);
   }
 

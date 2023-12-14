@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import javax.swing.text.html.HTMLDocument.Iterator;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.JavascriptExecutor;
@@ -45,8 +43,8 @@ public class Action extends CommonAction {
 
     this.driver = this.getDriver();
     this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-    int defaultWaitSeonds = 10;
-    wait = new WebDriverWait(this.driver, Duration.ofSeconds(defaultWaitSeonds));
+    int defaultWaitSeconds = 10;
+    wait = new WebDriverWait(this.driver, Duration.ofSeconds(defaultWaitSeconds));
 
     js = new JavaScriptAction(this.driver);
     alert = new Alert(this.driver);
@@ -1577,10 +1575,7 @@ public class Action extends CommonAction {
     }
 
     /**
-     * 현재 페이지에 특정 Session을 설정함
-     *
-     * @param key   특정 Session의 key
-     * @param value 특정 Session의 value
+     * 현재 페이지에 Session을 clear
      */
     public void clearAllSession() {
       je.executeScript("window.sessionStorage.clear()");
